@@ -10,7 +10,6 @@
 		C27488C813B22D8E0047486A /* CCTouchJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488C713B22D8E0047486A /* CCTouchJoint.mm */; };
 		C27488CF13B236D90047486A /* Box2dScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488CC13B236D90047486A /* Box2dScene.mm */; };
 		C27488D013B236D90047486A /* TestRagdoll.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488CE13B236D90047486A /* TestRagdoll.mm */; };
-		C27488D213B28F480047486A /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C27488D113B28F480047486A /* README.txt */; };
 		C2801EB7138708D5001502FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2801EB6138708D5001502FC /* QuartzCore.framework */; };
 		C2801EB9138708D5001502FC /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2801EB8138708D5001502FC /* OpenGLES.framework */; };
 		C2801EBB138708D5001502FC /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2801EBA138708D5001502FC /* OpenAL.framework */; };
@@ -172,7 +171,6 @@
 		C27488CC13B236D90047486A /* Box2dScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2dScene.mm; sourceTree = "<group>"; };
 		C27488CD13B236D90047486A /* TestRagdoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRagdoll.h; sourceTree = "<group>"; };
 		C27488CE13B236D90047486A /* TestRagdoll.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestRagdoll.mm; sourceTree = "<group>"; };
-		C27488D113B28F480047486A /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		C2801EB2138708D5001502FC /* Box2DCocos2DExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2DCocos2DExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2801EB6138708D5001502FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C2801EB8138708D5001502FC /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -579,7 +577,6 @@
 		C2801EC7138708D5001502FC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C27488D113B28F480047486A /* README.txt */,
 				C2801EC8138708D5001502FC /* Default.png */,
 				C2801ECA138708D5001502FC /* fps_images.png */,
 				C2801ECC138708D5001502FC /* Icon-72.png */,
@@ -1133,7 +1130,6 @@
 				C2801ED7138708D5001502FC /* Icon@2x.png in Resources */,
 				C2801EDA138708D5001502FC /* iTunesArtwork in Resources */,
 				C2802099138708D9001502FC /* blocks.png in Resources */,
-				C27488D213B28F480047486A /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1291,7 +1287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (

@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSMutableArray *touchJointList;
 
 - (void)update:(ccTime)dt;
+/** Init the box2d world. */
 - (void)initWorld;
 
 @end

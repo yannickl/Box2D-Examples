@@ -11,6 +11,11 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 
+/**
+ * Box2D scene.
+ * Contains the box2D world with the management mutli-touch
+ * and accelerometer.
+ */
 @interface Box2dScene : CCLayer
 {
 @public
@@ -27,6 +32,7 @@
     
     NSMutableArray *touchJointList;
 }
+/** Box2D world. */
 @property (readonly) b2World *world;
 
 /**
