@@ -160,7 +160,6 @@
 		C2802099138708D9001502FC /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = C2802098138708D9001502FC /* blocks.png */; };
 		C2993AD013B10D21005E1B4B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2993ACF13B10D21005E1B4B /* RootViewController.m */; };
 		C2993AD313B10D2F005E1B4B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2993AD213B10D2F005E1B4B /* AppDelegate.mm */; };
-		C2993AD613B10D3B005E1B4B /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2993AD513B10D3B005E1B4B /* HelloWorldLayer.mm */; };
 		C2B3917013A41D19007FD260 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B3916C13A41D19007FD260 /* GLES-Render.mm */; };
 /* End PBXBuildFile section */
 
@@ -478,8 +477,6 @@
 		C2993ACF13B10D21005E1B4B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ProjectFoundation/RootViewController.m; sourceTree = "<group>"; };
 		C2993AD113B10D2F005E1B4B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ProjectFoundation/AppDelegate.h; sourceTree = "<group>"; };
 		C2993AD213B10D2F005E1B4B /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ProjectFoundation/AppDelegate.mm; sourceTree = "<group>"; };
-		C2993AD413B10D3B005E1B4B /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldLayer.h; path = ProjectFoundation/HelloWorldLayer.h; sourceTree = "<group>"; };
-		C2993AD513B10D3B005E1B4B /* HelloWorldLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HelloWorldLayer.mm; path = ProjectFoundation/HelloWorldLayer.mm; sourceTree = "<group>"; };
 		C2B3916B13A41D19007FD260 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		C2B3916C13A41D19007FD260 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		C2B3916D13A41D19007FD260 /* QueryCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallback.h; sourceTree = "<group>"; };
@@ -1067,8 +1064,6 @@
 				C2B3916813A41AD8007FD260 /* AppDelegates */,
 				C2B3916913A41B84007FD260 /* Other Sources */,
 				C2802087138708D9001502FC /* Supporting Files */,
-				C2993AD413B10D3B005E1B4B /* HelloWorldLayer.h */,
-				C2993AD513B10D3B005E1B4B /* HelloWorldLayer.mm */,
 			);
 			name = ProjectFoundation;
 			sourceTree = "<group>";
@@ -1273,7 +1268,6 @@
 				C2B3917013A41D19007FD260 /* GLES-Render.mm in Sources */,
 				C2993AD013B10D21005E1B4B /* RootViewController.m in Sources */,
 				C2993AD313B10D2F005E1B4B /* AppDelegate.mm in Sources */,
-				C2993AD613B10D3B005E1B4B /* HelloWorldLayer.mm in Sources */,
 				C27488C813B22D8E0047486A /* CCTouchJoint.mm in Sources */,
 				C27488CF13B236D90047486A /* Box2dScene.mm in Sources */,
 				C27488D013B236D90047486A /* TestRagdoll.mm in Sources */,

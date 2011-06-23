@@ -1,0 +1,13 @@
+Box2D-Ragdoll-Example
+=====================
+
+What is this?
+-------------
+
+It's just a port of the Ragdoll example (originally created by Matthew Bush) from the [http://www.box2dflash.org/]Box2DAS3 to Cocos2D for iPhone.
+I took the opportunity to add the management of the multi-touch and the accelerometer to allow user to enhance its user experience.
+
+How do I use it?
+----------------
+
+You have to download the code and run it under Xcode4.

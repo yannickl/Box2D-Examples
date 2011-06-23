@@ -18,6 +18,7 @@
 // World gravity.
 #define WORLDGRAVITY 20.0f
 
+/** Convert the given position into the box2d world */
 static inline float ptm(float d)
 {
     return d / PTM_RATIO;

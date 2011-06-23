@@ -8,14 +8,12 @@
 
 #import "Box2dScene.h"
 
+/**
+ * Ragdoll example scene.
+ */
 @interface TestRagdoll : Box2dScene
 {
-@private
-    b2CircleShape circ;
-    b2PolygonShape box;
-    b2BodyDef bd;
-    b2RevoluteJointDef jd;
-    b2FixtureDef fixtureDef;
+
 }
 
 // Public Methods

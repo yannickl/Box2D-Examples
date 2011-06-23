@@ -23,12 +23,14 @@
 
 #import "Box2DExamples.h"
 
-#define RAGDOLLNUMBER 2
-#define STAIRNUMBER 7
+#define RAGDOLLNUMBER 2 // Initial ragdoll number
+#define STAIRNUMBER 7   // Number of stairs
 
 @interface TestRagdoll ()
 
+/** Add a new ragdoll into the world at the given position */
 - (void)addNewRagDollAtPosition:(CGPoint)ragDollPosition;
+/** Generate the stairs into the world */
 - (void)generateStairs;
 
 @end
@@ -91,11 +93,16 @@
     // -------------------------
     
     // Set these to dynamics bodies
+    b2BodyDef bd;
     bd.type = b2_dynamicBody;
 
+    b2PolygonShape box;
+    b2FixtureDef fixtureDef;
+    
     // Head ------
-    circ.m_radius = ptm(12.5f);
-    fixtureDef.shape = &circ;
+    b2CircleShape headShape;
+    headShape.m_radius = ptm(12.5f);
+    fixtureDef.shape = &headShape;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.4f;
     fixtureDef.restitution = 0.3f;
@@ -223,6 +230,7 @@
     // Joints ------------------
     // -------------------------
     
+    b2RevoluteJointDef jd;
     jd.enableLimit = true;
     
     // Head to shoulders
@@ -310,18 +318,22 @@
     CGSize screenSize = [[CCDirector sharedDirector] winSize];
     
     // Set stairs as static bodies
+    b2BodyDef bd;
     bd.type = b2_staticBody;
     
     // Stairs ------
+    b2FixtureDef fixtureDef;
     fixtureDef.density = 0.0f;
     fixtureDef.friction = 0.4f;
     fixtureDef.restitution = 0.3f;
     
+    b2PolygonShape stairShape;
+    
     // Left
     for (int i = 0; i <= STAIRNUMBER; i++)
     {
-        box.SetAsBox(ptm(10.0f * (STAIRNUMBER + 1 - i)), ptm(10.0f));
-        fixtureDef.shape = &box;
+        stairShape.SetAsBox(ptm(10.0f * (STAIRNUMBER + 1 - i)), ptm(10.0f));
+        fixtureDef.shape = &stairShape;
         bd.position.Set(ptm(STAIRNUMBER * 10.0f - 10.0f * i), ptm(10.0f + 20.0f * i));
         
         b2Body *stair = world->CreateBody(&bd);
@@ -331,8 +343,8 @@
     // Right
     for (int i = 0; i <= STAIRNUMBER; i++)
     {
-        box.SetAsBox(ptm(10.0f * (STAIRNUMBER + 1 - i)), ptm(10.0f));
-        fixtureDef.shape = &box;
+        stairShape.SetAsBox(ptm(10.0f * (STAIRNUMBER + 1 - i)), ptm(10.0f));
+        fixtureDef.shape = &stairShape;
         bd.position.Set(ptm(screenSize.width - STAIRNUMBER * 10.0f + 10.0f * i), ptm(10.0f + 20.0f * i));
         
         b2Body *stair = world->CreateBody(&bd);
