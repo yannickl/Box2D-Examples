@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/191/trunk/Box2D/Box2D/Dynamics/Contacts
+END
+b2EdgeAndPolygonContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp
+END
+b2PolygonAndCircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h
+END
+b2CircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.cpp
+END
+b2EdgeAndPolygonContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h
+END
+b2LoopAndPolygonContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2LoopAndPolygonContact.cpp
+END
+b2CircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.h
+END
+b2EdgeAndCircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp
+END
+b2LoopAndPolygonContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2LoopAndPolygonContact.h
+END
+b2ContactSolver.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/191/trunk/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp
+END
+b2LoopAndCircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2LoopAndCircleContact.cpp
+END
+b2EdgeAndCircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h
+END
+b2Contact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/163/trunk/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp
+END
+b2ContactSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/187/trunk/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.h
+END
+b2LoopAndCircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2LoopAndCircleContact.h
+END
+b2Contact.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/165/trunk/Box2D/Box2D/Dynamics/Contacts/b2Contact.h
+END
+b2PolygonContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.cpp
+END
+b2PolygonAndCircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+END
+b2PolygonContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/158/trunk/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.h
+END

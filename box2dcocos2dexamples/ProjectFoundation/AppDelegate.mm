@@ -12,7 +12,7 @@
 #import "GameConfig.h"
 #import "RootViewController.h"
 
-#import "TestRagdoll.h"
+#import "Box2DSceneManager.h"
 
 @implementation AppDelegate
 
@@ -108,12 +108,11 @@
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	
 	// Removes the startup flicker
 	[self removeStartupFlicker];
 	
-	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [TestRagdoll scene]];
+	// Run the Scene with the first example
+	[[CCDirector sharedDirector] runWithScene:[[Box2DSceneManager sharedBox2DSceneManager] currentBox2DScene]];
 }
 
 

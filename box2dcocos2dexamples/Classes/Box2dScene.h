@@ -20,10 +20,9 @@
 {
 @public
     b2World *world;
+    GLESDebugDraw *m_debugDraw;
     
 @private
-	GLESDebugDraw *m_debugDraw;
-    
     // Vector of actual mouse position
 	b2Vec2 m_mouseWorld;
     
@@ -34,6 +33,8 @@
 }
 /** Box2D world. */
 @property (readonly) b2World *world;
+/** GLES Debug draw. */
+@property (readonly) GLESDebugDraw *m_debugDraw;
 
 /**
  * Returns a CCScene that contains the Box2dScene layer.

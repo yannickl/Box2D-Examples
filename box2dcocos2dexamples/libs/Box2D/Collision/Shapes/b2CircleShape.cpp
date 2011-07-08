@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -18,6 +18,7 @@
 
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
 #include <new>
+using namespace std;
 
 b2Shape* b2CircleShape::Clone(b2BlockAllocator* allocator) const
 {
@@ -27,9 +28,14 @@ b2Shape* b2CircleShape::Clone(b2BlockAllocator* allocator) const
 	return clone;
 }
 
+int32 b2CircleShape::GetChildCount() const
+{
+	return 1;
+}
+
 bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) const
 {
-	b2Vec2 center = transform.position + b2Mul(transform.R, m_p);
+	b2Vec2 center = transform.p + b2Mul(transform.q, m_p);
 	b2Vec2 d = p - center;
 	return b2Dot(d, d) <= m_radius * m_radius;
 }
@@ -38,9 +44,12 @@ bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) con
 // From Section 3.1.2
 // x = s + a * r
 // norm(x) = radius
-bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input, const b2Transform& transform) const
+bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
+							const b2Transform& transform, int32 childIndex) const
 {
-	b2Vec2 position = transform.position + b2Mul(transform.R, m_p);
+	B2_NOT_USED(childIndex);
+
+	b2Vec2 position = transform.p + b2Mul(transform.q, m_p);
 	b2Vec2 s = input.p1 - position;
 	float32 b = b2Dot(s, s) - m_radius * m_radius;
 
@@ -72,9 +81,11 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 	return false;
 }
 
-void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform) const
+void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const
 {
-	b2Vec2 p = transform.position + b2Mul(transform.R, m_p);
+	B2_NOT_USED(childIndex);
+
+	b2Vec2 p = transform.p + b2Mul(transform.q, m_p);
 	aabb->lowerBound.Set(p.x - m_radius, p.y - m_radius);
 	aabb->upperBound.Set(p.x + m_radius, p.y + m_radius);
 }
@@ -86,4 +97,33 @@ void b2CircleShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// inertia about the local origin
 	massData->I = massData->mass * (0.5f * m_radius * m_radius + b2Dot(m_p, m_p));
+}
+
+float32 b2CircleShape::ComputeSubmergedArea(const b2Vec2& normal,
+											float32 offset,
+											const b2Transform& xf, 
+											b2Vec2* c) const
+{
+	b2Vec2 p = b2Mul(xf,m_p);
+	float32 l = -(b2Dot(normal,p) - offset);
+	if(l<-m_radius+FLT_EPSILON){
+		//Completely dry
+		return 0;
+	}
+	if(l>m_radius){
+		//Completely wet
+		*c = p;
+		return b2_pi*m_radius*m_radius;
+	}
+	
+	//Magic
+	float32 r2 = m_radius*m_radius;
+	float32 l2 = l*l;
+	float32 area = r2 * (asin(l/m_radius) + b2_pi/2) + l * sqrt(r2 - l2);
+	float32 com = -2.0f/3.0f*pow(r2-l2,1.5f)/area;
+	
+	c->x = p.x + normal.x * com;
+	c->y = p.y + normal.y * com;
+	
+	return area;
 }

@@ -109,7 +109,7 @@
     bd.position.Set(ptm(_ragDollPosition.x), ptm(_ragDollPosition.y));
     b2Body *head = world->CreateBody(&bd);
     head->CreateFixture(&fixtureDef);
-    head->ApplyLinearImpulse(b2Vec2(random() % 100 - 50.0f, random() % 100 - 50.0f),head->GetWorldCenter());
+    head->ApplyLinearImpulse(b2Vec2(random() % 100 - 50.0f, random() % 100 - 50.0f), head->GetWorldCenter());
     
     // -----------
 

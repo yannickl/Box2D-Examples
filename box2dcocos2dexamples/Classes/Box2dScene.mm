@@ -11,21 +11,28 @@
 
 #import "CCTouchJoint.h"
 #import "Box2DExamples.h"
+#import "Box2DSceneManager.h"
 
 #define RANDOM_SEED() srandom((unsigned)(mach_absolute_time() & 0xFFFFFFFF))
 
 @interface Box2dScene ()
 @property (nonatomic, retain) NSMutableArray *touchJointList;
 
+/** Update methods to refresh the box2d world. */
 - (void)update:(ccTime)dt;
 /** Init the box2d world. */
 - (void)initWorld;
+
+// Menu Callbacks
+- (void)previousCallback:(id)sender;
+- (void)restartCallback:(id)sender;
+- (void)nextCallback:(id)sender;
 
 @end
 
 @implementation Box2dScene
 @synthesize touchJointList;
-@synthesize world;
+@synthesize world, m_debugDraw;
 
 - (void) dealloc
 {
@@ -48,6 +55,10 @@
         // Init the seed
         RANDOM_SEED();
         
+        // Get the sceensize
+        CGSize screensize = [[CCDirector sharedDirector] winSize];
+        
+        // Init the touch joint list
         touchJointList = [[NSMutableArray alloc] init];
         
         // Init the box2d world
@@ -59,6 +70,22 @@
 		// Enable touches
 		self.isTouchEnabled = YES;
 
+        // Add the menu
+		CCMenuItemImage *item1 = 
+        [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(previousCallback:)];
+		CCMenuItemImage *item2 =
+        [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 =
+        [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+        
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+        [menu setPosition:CGPointZero];
+		[item1 setPosition:ccp(screensize.width / 2 - 100, 30)];
+		[item2 setPosition:ccp(screensize.width / 2, 30)];
+		[item3 setPosition:ccp(screensize.width / 2 + 100, 30)];
+        
+		[self addChild: menu z:1];
+        
         [self schedule:@selector(update:)];
     }
     return self;
@@ -90,7 +117,9 @@
 	
 	glPushMatrix();
 	glScalef( CC_CONTENT_SCALE_FACTOR(), CC_CONTENT_SCALE_FACTOR(), 1.0f);
+    
 	world->DrawDebugData();
+    
 	glPopMatrix();
 	
 	// restore default GL states
@@ -101,16 +130,7 @@
 
 - (void)accelerometer:(UIAccelerometer *)_accelerometer didAccelerate:(UIAcceleration *)_acceleration
 {	
-	static float prevX=0, prevY=0;
-	float filterFactor = 1.0f;
-	
-	float accelX = (float) _acceleration.x * filterFactor + (1 - filterFactor) * prevX;
-	float accelY = (float) _acceleration.y * filterFactor + (1 - filterFactor) * prevY;
-	
-	prevX = accelX;
-	prevY = accelY;
-    
-    b2Vec2 gravity(accelY * -WORLDGRAVITY, accelX * WORLDGRAVITY);
+    b2Vec2 gravity(_acceleration.y * -WORLDGRAVITY, _acceleration.x * WORLDGRAVITY);
     world->SetGravity(gravity);
 }
 
@@ -132,6 +152,7 @@
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed
 	world->Step(dt, velocityIterations, positionIterations);
+    world->ClearForces();
 }
 
 - (void)initWorld
@@ -144,7 +165,7 @@
     
     // Do we want to let bodies sleep?
     // This will speed up the physics simulation
-    bool doSleep = true;
+    bool doSleep = false;
     
     // Construct a world object, which will hold and simulate the rigid bodies
     world = new b2World(gravity, doSleep);
@@ -154,11 +175,13 @@
     m_debugDraw = new GLESDebugDraw(PTM_RATIO);
     
     uint32 flags = 0;
-    flags += b2DebugDraw::e_shapeBit;
-    flags += b2DebugDraw::e_jointBit;
+    flags += b2Draw::e_shapeBit;
+    flags += b2Draw::e_jointBit;
     //flags += b2DebugDraw::e_aabbBit;
     //flags += b2DebugDraw::e_pairBit;
-    flags += b2DebugDraw::e_centerOfMassBit;
+    flags += b2Draw::e_centerOfMassBit;
+    flags += b2Draw::e_controllerBit;
+    
     m_debugDraw->SetFlags(flags);
     
     world->SetDebugDraw(m_debugDraw);
@@ -177,20 +200,37 @@
     b2PolygonShape groundBox;		
     
     // Bottom    
-    groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(ptm(screenSize.width), 0));
-    groundBody->CreateFixture(&groundBox,0);
+    groundBox.SetAsBox(ptm(screenSize.width / 2), ptm(1.0f), b2Vec2(ptm(screenSize.width / 2), 0.0f), 0.0f);
+    groundBody->CreateFixture(&groundBox, 0);
     
     // Top
-    groundBox.SetAsEdge(b2Vec2(0, ptm(screenSize.height)), b2Vec2(ptm(screenSize.width), ptm(screenSize.height)));
-    groundBody->CreateFixture(&groundBox,0);
+    groundBox.SetAsBox(ptm(screenSize.width / 2), ptm(1.0f), b2Vec2(ptm(screenSize.width / 2), ptm(screenSize.height)), 0.0f);
+    groundBody->CreateFixture(&groundBox, 0);
     
     // Left
-    groundBox.SetAsEdge(b2Vec2(0, ptm(screenSize.height)), b2Vec2(0, 0));
-    groundBody->CreateFixture(&groundBox,0);
+    groundBox.SetAsBox(ptm(1.0f), ptm(screenSize.height / 2), b2Vec2(0, ptm(screenSize.height / 2)), 0.0f);
+    groundBody->CreateFixture(&groundBox, 0);
     
     // Right
-    groundBox.SetAsEdge(b2Vec2(ptm(screenSize.width), ptm(screenSize.height)), b2Vec2(ptm(screenSize.width), 0));
-    groundBody->CreateFixture(&groundBox,0);
+    groundBox.SetAsBox(ptm(1.0f), ptm(screenSize.height / 2), b2Vec2(ptm(screenSize.width), ptm(screenSize.height / 2)), 0.0f);
+    groundBody->CreateFixture(&groundBox, 0);
+}
+
+#pragma mark Menu Callbacks Methods
+
+- (void)previousCallback:(id)sender
+{
+    [[CCDirector sharedDirector] replaceScene:[[Box2DSceneManager sharedBox2DSceneManager] previousBox2DScene]];
+}
+
+- (void)restartCallback:(id)sender
+{
+	[[CCDirector sharedDirector] replaceScene:[[Box2DSceneManager sharedBox2DSceneManager] currentBox2DScene]];
+}
+
+- (void)nextCallback:(id)sender
+{
+    [[CCDirector sharedDirector] replaceScene:[[Box2DSceneManager sharedBox2DSceneManager] nextBox2DScene]];
 }
 
 #pragma mark -
@@ -203,7 +243,7 @@
 	for(UITouch *touch in allTouches)
     {
 		CGPoint location = [touch locationInView:touch.view];
-        
+
 		location = [[CCDirector sharedDirector] convertToGL:location];
 		b2Vec2 worldLoc = b2Vec2(ptm(location.x), ptm(location.y));
         
@@ -246,7 +286,7 @@
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for (CCTouchJoint *tj in touchJointList)
-    {        
+    {
         if([tj.touch phase] == UITouchPhaseMoved)
         {
 			// Update if it is moved
@@ -258,6 +298,7 @@
 		}
 	}
 }
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	NSSet *allTouches = [event allTouches];
