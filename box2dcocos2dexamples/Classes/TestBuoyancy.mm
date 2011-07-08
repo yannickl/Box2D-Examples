@@ -11,6 +11,7 @@
 #import "Box2DExamples.h"
 
 #define BUOYANCYOFFSET 140.0f
+#define BOXNUMBERS 2
 
 @interface TestBuoyancy ()
 /** Box2d buoyancy controller. */
@@ -30,6 +31,10 @@
 {
 	if ((self = [super init]))
     {
+        // Get the screen size
+        CGSize screenSize = [[CCDirector sharedDirector] winSize];
+        
+        // Define the buoyancy controller
         b2BuoyancyControllerDef bcd;
         
         bcd.normal.Set(0.0f, 1.0f);
@@ -41,11 +46,12 @@
     
         bc = (b2BuoyancyController *)world->CreateController(&bcd);
 
-        for (int i = 0; i < 1; i++)
+        // Add boxes
+        for (int i = 0; i < BOXNUMBERS; i++)
         {
             b2BodyDef bd;
             bd.type = b2_dynamicBody;
-            bd.position.Set(ptm(100 + 120), ptm(200));
+            bd.position.Set(ptm(screenSize.width / 4 + random() % (int)(screenSize.width / 2)), ptm(screenSize.height / 2));
             
             b2PolygonShape boxDef;
             boxDef.SetAsBox(ptm(20), ptm(20));
