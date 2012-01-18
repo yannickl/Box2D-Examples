@@ -4,6 +4,7 @@
 //
 //  Created by Yannick LORIOT on 29/06/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "Box2DSceneManager.h"
@@ -44,6 +45,7 @@ static Box2DSceneManager *box2DSceneManager = nil;
         box2DScenes = [[NSArray alloc] initWithObjects:
                        @"TestRagdoll",
                        @"TestBuoyancy",
+                       @"TestSliceBody",
                        nil];
     }
     return self;
@@ -66,14 +68,18 @@ static Box2DSceneManager *box2DSceneManager = nil;
 
 - (CCScene *)nextBox2DScene
 {
-	currentBox2DSceneId = (currentBox2DSceneId + 1) % [box2DScenes count];
+    currentBox2DSceneId = (currentBox2DSceneId + 1) % [box2DScenes count];
     
 	return [self currentBox2DScene];
 }
 
 - (CCScene *)previousBox2DScene
 {
-	currentBox2DSceneId = (currentBox2DSceneId - 1) % [box2DScenes count];
+    currentBox2DSceneId = currentBox2DSceneId - 1;
+    if (currentBox2DSceneId < 0)
+    {
+        currentBox2DSceneId = [box2DScenes count] - 1;
+    }
     
 	return [self currentBox2DScene];
 }
@@ -83,7 +89,7 @@ static Box2DSceneManager *box2DSceneManager = nil;
 	NSString *box2DSceneName = [box2DScenes objectAtIndex:currentBox2DSceneId];
     
     Class nextBox2DScene = NSClassFromString(box2DSceneName);
-	return [nextBox2DScene scene];
+	return [nextBox2DScene sceneWithTitle:box2DSceneName];
 }
 
 #pragma mark Box2DSceneManager Private Methods

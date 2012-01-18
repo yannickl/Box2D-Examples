@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  box2dcocos2dexamples
+//  Box2DCocos2DExamples
 //
 //  Created by Yannick LORIOT on 20/05/11.
 //  Copyright Yannick Loriot 2011. All rights reserved.

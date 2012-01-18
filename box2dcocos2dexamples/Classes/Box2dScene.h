@@ -4,6 +4,7 @@
 //
 //  Created by Yannick LORIOT on 12/06/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "cocos2d.h"
@@ -19,6 +20,8 @@
 @interface Box2dScene : CCLayer
 {
 @public
+    CCLabelTTF *sceneTitleLabel;
+    
     b2World *world;
     GLESDebugDraw *m_debugDraw;
     
@@ -31,16 +34,22 @@
     
     NSMutableArray *touchJointList;
 }
+/** Title label of the scene. */
+@property (nonatomic, retain) CCLabelTTF *sceneTitleLabel;
 /** Box2D world. */
 @property (readonly) b2World *world;
 /** GLES Debug draw. */
 @property (readonly) GLESDebugDraw *m_debugDraw;
 
+#pragma mark Constructors - Initializers
+
 /**
  * Returns a CCScene that contains the Box2dScene layer.
+ *
+ * @param title The title of the scene.
  */
-+ (CCScene *)scene;
++ (CCScene *)sceneWithTitle:(NSString *)title;
 
-// Public Methods
+#pragma mark Public Methods
 
 @end

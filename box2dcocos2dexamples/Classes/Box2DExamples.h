@@ -18,10 +18,16 @@
 // World gravity.
 #define WORLDGRAVITY 20.0f
 
-/** Convert the given position into the box2d world */
+/** Convert the given position into the box2d world. */
 static inline float ptm(float d)
 {
     return d / PTM_RATIO;
+}
+
+/** Convert the given position into the cocos2d world. */
+static inline float mtp(float d)
+{
+    return d * PTM_RATIO;
 }
 
 #endif /** !__H_BOX2D_EXAMPLES__ guard */

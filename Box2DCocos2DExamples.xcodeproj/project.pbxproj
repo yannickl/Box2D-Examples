@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C26192D414B9B783003A12E8 /* TestSliceBody.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26192D314B9B76E003A12E8 /* TestSliceBody.mm */; };
 		C27488C813B22D8E0047486A /* CCTouchJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488C713B22D8E0047486A /* CCTouchJoint.mm */; };
 		C27488CF13B236D90047486A /* Box2dScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488CC13B236D90047486A /* Box2dScene.mm */; };
 		C27488D013B236D90047486A /* TestRagdoll.mm in Sources */ = {isa = PBXBuildFile; fileRef = C27488CE13B236D90047486A /* TestRagdoll.mm */; };
@@ -187,9 +188,14 @@
 		C2C8427713BBB6740059A1A3 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C8427113BBB6740059A1A3 /* r2-hd.png */; };
 		C2C8427813BBB6740059A1A3 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C8427213BBB6740059A1A3 /* r2.png */; };
 		C2C8427D13BBB9380059A1A3 /* TestBuoyancy.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2C8427C13BBB9380059A1A3 /* TestBuoyancy.mm */; };
+		C2FDFD7F14B9DE43001F8669 /* CCRayCast.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2FDFD7E14B9DE43001F8669 /* CCRayCast.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C25B701114B877E500336869 /* QueryCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallback.h; sourceTree = "<group>"; };
+		C26192D114B9B28E003A12E8 /* RaycastCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaycastCallback.h; sourceTree = "<group>"; };
+		C26192D214B9B76E003A12E8 /* TestSliceBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSliceBody.h; sourceTree = "<group>"; };
+		C26192D314B9B76E003A12E8 /* TestSliceBody.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestSliceBody.mm; sourceTree = "<group>"; };
 		C27488C713B22D8E0047486A /* CCTouchJoint.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCTouchJoint.mm; sourceTree = "<group>"; };
 		C27488CA13B236D90047486A /* Box2DExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DExamples.h; sourceTree = "<group>"; };
 		C27488CB13B236D90047486A /* Box2dScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2dScene.h; sourceTree = "<group>"; };
@@ -528,7 +534,6 @@
 		C2993AD213B10D2F005E1B4B /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ProjectFoundation/AppDelegate.mm; sourceTree = "<group>"; };
 		C2B3916B13A41D19007FD260 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		C2B3916C13A41D19007FD260 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
-		C2B3916D13A41D19007FD260 /* QueryCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallback.h; sourceTree = "<group>"; };
 		C2B391F813A4F318007FD260 /* CCTouchJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchJoint.h; sourceTree = "<group>"; };
 		C2C8424A13BB99DF0059A1A3 /* Box2DSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DSceneManager.h; sourceTree = "<group>"; };
 		C2C8424B13BB99E00059A1A3 /* Box2DSceneManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DSceneManager.mm; sourceTree = "<group>"; };
@@ -546,6 +551,8 @@
 		C2C8427213BBB6740059A1A3 /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		C2C8427B13BBB9380059A1A3 /* TestBuoyancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBuoyancy.h; sourceTree = "<group>"; };
 		C2C8427C13BBB9380059A1A3 /* TestBuoyancy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestBuoyancy.mm; sourceTree = "<group>"; };
+		C2FDFD7B14B9DE30001F8669 /* CCRayCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRayCast.h; sourceTree = "<group>"; };
+		C2FDFD7E14B9DE43001F8669 /* CCRayCast.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCRayCast.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,7 +581,10 @@
 				C2B3916C13A41D19007FD260 /* GLES-Render.mm */,
 				C2B391F813A4F318007FD260 /* CCTouchJoint.h */,
 				C27488C713B22D8E0047486A /* CCTouchJoint.mm */,
-				C2B3916D13A41D19007FD260 /* QueryCallback.h */,
+				C2FDFD7B14B9DE30001F8669 /* CCRayCast.h */,
+				C2FDFD7E14B9DE43001F8669 /* CCRayCast.mm */,
+				C25B701114B877E500336869 /* QueryCallback.h */,
+				C26192D114B9B28E003A12E8 /* RaycastCallback.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1210,6 +1220,8 @@
 				C27488CE13B236D90047486A /* TestRagdoll.mm */,
 				C2C8427B13BBB9380059A1A3 /* TestBuoyancy.h */,
 				C2C8427C13BBB9380059A1A3 /* TestBuoyancy.mm */,
+				C26192D214B9B76E003A12E8 /* TestSliceBody.h */,
+				C26192D314B9B76E003A12E8 /* TestSliceBody.mm */,
 			);
 			name = Examples;
 			sourceTree = "<group>";
@@ -1239,6 +1251,10 @@
 /* Begin PBXProject section */
 		C2801EA9138708D5001502FC /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Yannick Loriot";
+			};
 			buildConfigurationList = C2801EAC138708D5001502FC /* Build configuration list for PBXProject "Box2DCocos2DExamples" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1387,15 +1403,6 @@
 				C280200B138708D8001502FC /* FontManager.m in Sources */,
 				C280200E138708D8001502FC /* ZAttributedString.m in Sources */,
 				C2802012138708D8001502FC /* ZFont.m in Sources */,
-				C280208A138708D9001502FC /* main.m in Sources */,
-				C2B3917013A41D19007FD260 /* GLES-Render.mm in Sources */,
-				C2993AD013B10D21005E1B4B /* RootViewController.m in Sources */,
-				C2993AD313B10D2F005E1B4B /* AppDelegate.mm in Sources */,
-				C27488C813B22D8E0047486A /* CCTouchJoint.mm in Sources */,
-				C27488CF13B236D90047486A /* Box2dScene.mm in Sources */,
-				C27488D013B236D90047486A /* TestRagdoll.mm in Sources */,
-				C2C8424C13BB99E00059A1A3 /* Box2DSceneManager.mm in Sources */,
-				C2C8427D13BBB9380059A1A3 /* TestBuoyancy.mm in Sources */,
 				C27E838E13BD1CEC0082BF4C /* b2BroadPhase.cpp in Sources */,
 				C27E838F13BD1CEC0082BF4C /* b2CollideCircle.cpp in Sources */,
 				C27E839013BD1CEC0082BF4C /* b2CollideEdge.cpp in Sources */,
@@ -1443,6 +1450,17 @@
 				C27E83BA13BD1CEC0082BF4C /* b2Rope.cpp in Sources */,
 				C27E83C013BD20EE0082BF4C /* b2BuoyancyController.cpp in Sources */,
 				C27E83C113BD20EE0082BF4C /* b2Controller.cpp in Sources */,
+				C280208A138708D9001502FC /* main.m in Sources */,
+				C2B3917013A41D19007FD260 /* GLES-Render.mm in Sources */,
+				C2993AD013B10D21005E1B4B /* RootViewController.m in Sources */,
+				C2993AD313B10D2F005E1B4B /* AppDelegate.mm in Sources */,
+				C27488C813B22D8E0047486A /* CCTouchJoint.mm in Sources */,
+				C27488CF13B236D90047486A /* Box2dScene.mm in Sources */,
+				C2C8424C13BB99E00059A1A3 /* Box2DSceneManager.mm in Sources */,
+				C27488D013B236D90047486A /* TestRagdoll.mm in Sources */,
+				C2C8427D13BBB9380059A1A3 /* TestBuoyancy.mm in Sources */,
+				C26192D414B9B783003A12E8 /* TestSliceBody.mm in Sources */,
+				C2FDFD7F14B9DE43001F8669 /* CCRayCast.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1454,7 +1472,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1466,6 +1484,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1498,6 +1517,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = box2dcocos2dexamples/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = box2dcocos2dexamples/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-lz";
@@ -1516,6 +1536,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = box2dcocos2dexamples/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = box2dcocos2dexamples/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-lz";

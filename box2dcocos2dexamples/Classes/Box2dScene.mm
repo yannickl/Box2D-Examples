@@ -4,6 +4,7 @@
 //
 //  Created by Yannick LORIOT on 12/06/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "Box2dScene.h"
@@ -32,7 +33,7 @@
 
 @implementation Box2dScene
 @synthesize touchJointList;
-@synthesize world, m_debugDraw;
+@synthesize sceneTitleLabel, world, m_debugDraw;
 
 - (void) dealloc
 {
@@ -44,6 +45,8 @@
     
     // Delete the touch joint list
     [touchJointList release];
+    
+    [sceneTitleLabel release], sceneTitleLabel = nil;
     
 	[super dealloc];
 }
@@ -70,6 +73,11 @@
 		// Enable touches
 		self.isTouchEnabled = YES;
 
+        // Add the title
+        self.sceneTitleLabel = [CCLabelTTF labelWithString:@"Title" fontName:@"Arial" fontSize:12];
+        [sceneTitleLabel setPosition:ccp (screensize.width / 2, screensize.height - sceneTitleLabel.contentSize.height / 2)];
+        [self addChild:sceneTitleLabel z:1];
+        
         // Add the menu
 		CCMenuItemImage *item1 = 
         [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(previousCallback:)];
@@ -91,14 +99,15 @@
     return self;
 }
 
-+ (CCScene *)scene
++ (CCScene *)sceneWithTitle:(NSString *)title
 {
 	// 'scene' is an autorelease object
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object
-	Box2dScene *layer = [Box2dScene node];
-	
+	Box2dScene *layer = [self node];
+	[layer.sceneTitleLabel setString:title];
+    
 	// Add layer as a child to scene
 	[scene addChild: layer];
 	
@@ -141,13 +150,13 @@
 
 - (void)update:(ccTime)dt
 {    
-	//It is recommended that a fixed time step is used with Box2D for stability
-	//of the simulation, however, we are using a variable time step here.
-	//You need to make an informed choice, the following URL is useful
-	//http://gafferongames.com/game-physics/fix-your-timestep/
+	// It is recommended that a fixed time step is used with Box2D for stability
+	// of the simulation, however, we are using a variable time step here.
+	// You need to make an informed choice, the following URL is useful
+	// http://gafferongames.com/game-physics/fix-your-timestep/
 	
-	int32 velocityIterations = 8;
-	int32 positionIterations = 1;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
 	
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed
@@ -327,6 +336,11 @@
 	}
     
     [touchJointList removeObjectsInArray:discardedItems];
+}
+
+- (void)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [touchJointList removeAllObjects];
 }
 
 @end

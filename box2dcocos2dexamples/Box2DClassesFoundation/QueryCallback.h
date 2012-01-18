@@ -1,6 +1,6 @@
 //
 //  QueryCallback.h
-//  box2dtest
+//  Box2DCocos2DExamples
 //
 //  Created by Yannick LORIOT on 21/05/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
@@ -11,13 +11,13 @@
 class QueryCallback : public b2QueryCallback
 {
 public:
-	QueryCallback(const b2Vec2& point)
+	QueryCallback (const b2Vec2& point)
 	{
 		m_point = point;
 		m_fixture = NULL;
 	}
     
-	bool ReportFixture(b2Fixture* fixture)
+	bool ReportFixture (b2Fixture* fixture)
 	{
 		b2Body *body = fixture->GetBody();
 		if (body->GetType() != b2_staticBody)

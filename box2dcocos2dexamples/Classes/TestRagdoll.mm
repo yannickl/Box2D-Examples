@@ -1,6 +1,9 @@
 /**
  * TestRagdoll.m is a port to Box2D/Cocos2D of Box2DAS3 Ragdoll example,
  * originally written by Matthew Bush (skatehead [at] gmail.com).
+ *
+ * Modified by Yannick Loriot
+ * http://yannickloriot.com
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty.  In no event will the authors be held liable for any damages
@@ -64,21 +67,6 @@
         }
     }
     return self;
-}
-
-+ (CCScene *)scene
-{
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
-	TestRagdoll *layer = [TestRagdoll node];
-	
-	// add layer as a child to scene
-	[scene addChild:layer];
-	
-	// return the scene
-	return scene;
 }
 
 #pragma mark -

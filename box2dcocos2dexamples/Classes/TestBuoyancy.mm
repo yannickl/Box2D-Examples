@@ -4,6 +4,7 @@
 //
 //  Created by Yannick LORIOT on 29/06/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "TestBuoyancy.h"
@@ -40,8 +41,8 @@
         bcd.normal.Set(0.0f, 1.0f);
         bcd.offset = ptm(BUOYANCYOFFSET);
         bcd.density = 2.0f;
-        bcd.linearDrag = 5.0f;
-        bcd.angularDrag = 8.0f;
+        bcd.linearDrag = 7.0f;
+        bcd.angularDrag = 10.0f;
         bcd.useWorldGravity = true;
     
         bc = (b2BuoyancyController *)world->CreateController(&bcd);
@@ -69,21 +70,6 @@
         }
     }
     return self;
-}
-
-+ (CCScene *)scene
-{
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
-	TestBuoyancy *layer = [TestBuoyancy node];
-	
-	// add layer as a child to scene
-	[scene addChild:layer];
-	
-	// return the scene
-	return scene;
 }
 
 - (void)accelerometer:(UIAccelerometer *)_accelerometer didAccelerate:(UIAcceleration *)_acceleration

@@ -678,7 +678,7 @@ bool b2ContactSolver::SolvePositionConstraints()
 		b2Vec2 localCenterB = pc->localCenterB;
 		float32 mB = pc->invMassB;
 		float32 iB = pc->invIB;
-		int32 pointCount = pc->pointCount;
+		//int32 pointCount = pc->pointCount;
 
 		b2Vec2 cA = m_positions[indexA].c;
 		float32 aA = m_positions[indexA].a;

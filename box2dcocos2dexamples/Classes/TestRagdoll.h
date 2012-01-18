@@ -1,9 +1,10 @@
 //
 //  TestRagdoll.h
-//  box2dcocos2dexamples
+//  Box2DCocos2DExamples
 //
 //  Created by Yannick LORIOT on 20/05/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "Box2dScene.h"
@@ -13,9 +14,11 @@
  */
 @interface TestRagdoll : Box2dScene
 {
-
+@public
 }
 
-// Public Methods
+#pragma mark Constructors - Initializers
+
+#pragma mark Public Methods
 
 @end

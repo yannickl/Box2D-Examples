@@ -4,6 +4,7 @@
 //
 //  Created by Yannick LORIOT on 29/06/11.
 //  Copyright 2011 Yannick Loriot. All rights reserved.
+//  http://yannickloriot.com
 //
 
 #import "Box2dScene.h"
@@ -13,10 +14,12 @@
  */
 @interface TestBuoyancy : Box2dScene
 {
-@private
+@protected
     b2BuoyancyController *bc;
 }
 
-// Public Methods
+#pragma mark Constructors - Initializers
+
+#pragma mark Public Methods
 
 @end
