@@ -21,7 +21,7 @@
 
 enum
 {
-    maxVerticesPerBody = 20     // Defines the max number of vertex per body
+    maxVerticesPerBody = 24     // Defines the max number of vertex per body
 };
 
 /**
@@ -34,7 +34,7 @@ enum
  * Another useful thing about determinants is that their absolute value
  * is two times the face of the triangle, formed by the three given points.
  */
-float determinant(float x1, float y1, float x2, float y2, float x3, float y3)
+inline float determinant(float x1, float y1, float x2, float y2, float x3, float y3)
 {
     return x1 * y2 + x2 * y3 + x3 * y1 - y1 * x2 - y2 * x3 - y3 * x1;
 }
@@ -45,10 +45,10 @@ float determinant(float x1, float y1, float x2, float y2, float x3, float y3)
  * Compare 2 vertor of vertex in ascending order, according to their 
  * x-coordinate.
  */
-int comp_b2Vec2_in_x(const void* a_in, const void* b_in)
+inline int comp_b2Vec2_in_x(const void* a_in, const void* b_in)
 {
-    const b2Vec2* a = (const b2Vec2*)a_in;
-    const b2Vec2* b = (const b2Vec2*)b_in;
+    const b2Vec2 *a = (const b2Vec2 *)a_in;
+    const b2Vec2 *b = (const b2Vec2 *)b_in;
     
     if (a->x > b->x)
     {
@@ -77,31 +77,30 @@ int comp_b2Vec2_in_x(const void* a_in, const void* b_in)
  * talked about earlier. It starts putting the points above CD from the 
  * beginning of the vector, and the points below CD from the end of the vector.
  */
-void arrangeClockwise(b2Vec2 *vec, int vecCount, b2Vec2 *m_out)
+inline void arrangeClockwise(b2Vec2 *vec, int vecCount, b2Vec2 *m_out)
 {
     qsort(vec, vecCount, sizeof(b2Vec2), comp_b2Vec2_in_x);
-    
-    int i1 = 1;
-    int i2 = vecCount - 1;
-    
+
+    int iCounterClockWise = 1;
+    int iClockWise = vecCount - 1;
+
     m_out[0] = vec[0];
-    b2Vec2 C = vec[0];
-    b2Vec2 D = vec[vecCount - 1];
-    
-    for (int i = 1; i < vecCount-1; i++)
+    b2Vec2 C = vec[0];              // leftmost point
+    b2Vec2 D = vec[vecCount - 1];   // rightmost point
+ 
+    for (int i = 1; i < vecCount - 1; i++)
     {
         int d = determinant(C.x, C.y, D.x, D.y, vec[i].x, vec[i].y);
         
-        if (d < 0)
+        if (d < 0.0f)
         {
-            m_out[i1++] = vec[i];
+            m_out[iCounterClockWise++] = vec[i];
         } else
         {
-            m_out[i2--] = vec[i];
+            m_out[iClockWise--] = vec[i];
         }
     }
-    
-    m_out[i1] = vec[vecCount-1];
+    m_out[iCounterClockWise] = vec[vecCount - 1];
 }
 
 /**
@@ -109,59 +108,87 @@ void arrangeClockwise(b2Vec2 *vec, int vecCount, b2Vec2 *m_out)
  *
  * Determine whether the given vertices represent a valid shape.
  */
-int sanityCheck(b2Vec2 *vec, int vecCount)
+inline int sanityCheck(b2Vec2 *vec, int vecCount)
 {
+    // Polygons need to at least have 3 vertices
     if (vecCount < 3)
     {
         return false;
     }
     
-    // Calculate the area
-    float32 area = 0.0;
-    for (int i = 0; i < vecCount; i++)
-    {
-        int j = (i + 1) % vecCount;
-        area += vec[j].x * vec[i].y - vec[i].x * vec[j].y;
-    }
-    area = area / 2;
-  
-    if (abs(area) < 0.00001f)
+    // The number of vertices cannot exceed b2_maxPolygonVertices
+    if (vecCount > b2_maxPolygonVertices)
     {
         return false;
     }
     
-    for (int i = 0; i < vecCount; ++i)
-    {
-        int i1 = i;
-        int i2 = i + 1 < vecCount ? i + 1 : 0;
-        b2Vec2 edge = vec[i2] - vec[i1];
-        if (edge.LengthSquared() < b2_epsilon)
-            return false;
-    }
-    
+    // Box2D needs the distance from each vertex to be greater than b2_epsilon
     for (int i = 0; i < vecCount; ++i)
     {
         int i1 = i;
         int i2 = i + 1 < vecCount ? i + 1 : 0;
         b2Vec2 edge = vec[i2] - vec[i1];
         
-        for (int j = 0; j < vecCount; ++j)
+        if (edge.LengthSquared() < b2_epsilon * b2_epsilon)
         {
-            // Don't check vertices on the current edge.
-            if (j == i1 || j == i2)
-            {
-                continue;
-            }
-            
-            b2Vec2 r = vec[j] - vec[i1];
-            
-            // Your polygon is non-convex (it has an indentation) or
-            // has colinear edges.
-            float s = edge.x * r.y - edge.y * r.x;
-            
-            if (s < 0.0f)
-                return false;
+            return false;
         }
+    }
+    
+    // Box2D needs the area of a polygon to be greater than b2_epsilon
+    float32 area = 0.0f;
+    b2Vec2 pRef(0.0f,0.0f);
+    for (int i = 0; i < vecCount; ++i)
+    {
+        b2Vec2 p1 = pRef;
+        b2Vec2 p2 = vec[i];
+        b2Vec2 p3 = i + 1 < vecCount ? vec[i+1] : vec[0];
+        
+        b2Vec2 e1 = p2 - p1;
+        b2Vec2 e2 = p3 - p1;
+        
+        float32 D = b2Cross(e1, e2);
+        
+        float32 triangleArea = 0.5f * D;
+        area += triangleArea;
+    }
+    
+    if (area <= 0.0001f)
+    {
+        NSLog(@"Area too small: %f", area);
+        return false;
+    }
+    
+    // Box2D requires that the shape be Convex.
+    b2Vec2 v1 = vec[0] - vec[vecCount-1];
+    b2Vec2 v2 = vec[1] - vec[0];
+    float referenceDeterminant = v1.x * v2.y - v1.y * v2.x;
+    
+    for (int i = 1; i < vecCount - 1; i++)
+    {
+        v1 = v2;
+        v2 = vec[i+1] - vec[i];
+        
+        float determinant = v1.x * v2.y - v1.y * v2.x;
+        
+        // Use the determinant to check direction from one point to another.
+        // A convex shape's points should only go around in one direction.
+        // The sign of the determinant determines that direction.
+        // If the sign of the determinant changes mid-way, then you have a concave shape.
+        if (referenceDeterminant * determinant < 0.0f)
+        {
+            // If multiplying two determinants result to a negative value, 
+            // you know that the sign of both numbers differ, hence it is concave
+            return false;
+        }
+    }
+    
+    v1 = v2;
+    v2 = vec[0] - vec[vecCount-1];
+    float determinant = v1.x * v2.y - v1.y * v2.x;
+    if (referenceDeterminant * determinant < 0.0f)
+    {
+        return false;
     }
     
     return true;
@@ -270,19 +297,19 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
 
 - (void)sliceBody:(b2Body *)slicedBody fromPoint:(b2Vec2)A toPoint:(b2Vec2)B
 {
-    b2Fixture *origFixture = slicedBody->GetFixtureList();
-    b2PolygonShape *shape = (b2PolygonShape *)origFixture->GetShape();
+    b2Fixture *originalFixture = slicedBody->GetFixtureList();
+    b2PolygonShape *originalPolygon = (b2PolygonShape *)originalFixture->GetShape();
     
     // Retrieve the vertex number
-    b2Vec2 *verticesVec = shape->m_vertices;
-    int numVertices = shape->GetVertexCount();
+    b2Vec2 *verticesVec = originalPolygon->m_vertices;
+    int vertexCount = originalPolygon->GetVertexCount();
     
     // Initialize the shape1 and shape2 vertices
     int shape1VertexCount = 0;
-    b2Vec2 shape1Vertices[maxVerticesPerBody];
+    b2Vec2 shape1VerticesSorted[maxVerticesPerBody];
     b2Vec2 temp_shape1Vertices[maxVerticesPerBody];
     int shape2VertexCount = 0;
-    b2Vec2 shape2Vertices[maxVerticesPerBody];
+    b2Vec2 shape2VerticesSorted[maxVerticesPerBody];
     b2Vec2 temp_shape2Vertices[maxVerticesPerBody];
     
     // The world.RayCast() method returns points in world coordinates
@@ -304,21 +331,32 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
     // - if the value > 0, then the three points are in clockwise order (the point is under AB)
     // - if the value = 0, then the three points lie on the same line (the point is on AB)
     // - if the value < 0, then the three points are in counter-clockwise order (the point is above AB). 
-    for (int i = 0; i < numVertices; i++)
+    for (int i = 0; i < vertexCount; i++)
     {
-        float d = determinant(A.x, A.y, B.x, B.y, verticesVec[i].x, verticesVec[i].y);
+        // Get our vertex from the polygon
+        b2Vec2 currentPoint = verticesVec[i];
+        
+        //you check if our point is not the same as our entry or exit point first
+        b2Vec2 diffFromEntryPoint = currentPoint - b2Vec2(A.x, A.y);
+        b2Vec2 diffFromExitPoint = currentPoint - b2Vec2(B.x, B.y);
+        
+        if ((diffFromEntryPoint.x == 0 && diffFromEntryPoint.y == 0) 
+            || (diffFromExitPoint.x == 0 && diffFromExitPoint.y == 0))
+            continue;
+        
+        float d = determinant(A.x, A.y, B.x, B.y, currentPoint.x, currentPoint.y);
         if (d > 0)
         {
-            temp_shape1Vertices[shape1VertexCount++] = verticesVec[i];
+            temp_shape1Vertices[shape1VertexCount++] = currentPoint;
         } else
         {
-            temp_shape2Vertices[shape2VertexCount++] = verticesVec[i];
+            temp_shape2Vertices[shape2VertexCount++] = currentPoint;
         }
     }
     
     // In order to be able to create the two new shapes, the vertices have to be arranged in clockwise order
-    arrangeClockwise(temp_shape1Vertices, shape1VertexCount, shape1Vertices);
-    arrangeClockwise(temp_shape2Vertices, shape2VertexCount, shape2Vertices);
+    arrangeClockwise(temp_shape1Vertices, shape1VertexCount, shape1VerticesSorted);
+    arrangeClockwise(temp_shape2Vertices, shape2VertexCount, shape2VerticesSorted);
 
     // Setting the properties of the two newly created shapes
     b2BodyDef bodyDef;    
@@ -328,15 +366,16 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(slicedBody->GetPosition().x, slicedBody->GetPosition().y);
     
-    fixtureDef.density = origFixture->GetDensity();
-    fixtureDef.friction = origFixture->GetFriction();
-    fixtureDef.restitution = origFixture->GetRestitution();
+    fixtureDef.density = originalFixture->GetDensity();
+    fixtureDef.friction = originalFixture->GetFriction();
+    fixtureDef.restitution = originalFixture->GetRestitution();
     
-    // If the shape1 is valid
-    if (sanityCheck(shape1Vertices, shape1VertexCount))
+    // If the shape1 and the shape2 are valid
+    if (sanityCheck(shape1VerticesSorted, shape1VertexCount)
+        && sanityCheck(shape2VerticesSorted, shape2VertexCount))
     {
         // Creating the first shape
-        polyShape.Set(shape1Vertices, shape1VertexCount);
+        polyShape.Set(shape1VerticesSorted, shape1VertexCount);
         fixtureDef.shape = &polyShape;
         
         b2Body *body = world->CreateBody(&bodyDef);
@@ -345,25 +384,21 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
         body->SetLinearVelocity(slicedBody->GetLinearVelocity());
         body->SetAngularVelocity(slicedBody->GetAngularVelocity());
         body->SetBullet(true);
-    }
-    
-    // If the shape2 is valid
-    if (sanityCheck(shape2Vertices, shape2VertexCount))
-    {
+        
         // Creating the second shape
-        polyShape.Set(shape2Vertices, shape2VertexCount);
+        polyShape.Set(shape2VerticesSorted, shape2VertexCount);
         fixtureDef.shape = &polyShape;
         
-        b2Body *body = world->CreateBody(&bodyDef);
+        body = world->CreateBody(&bodyDef);
         body->SetTransform(slicedBody->GetPosition(), slicedBody->GetAngle());
         body->CreateFixture(&fixtureDef);
         body->SetLinearVelocity(slicedBody->GetLinearVelocity());
         body->SetAngularVelocity(slicedBody->GetAngularVelocity());
         body->SetBullet(true);
-    }    
-    
-    // To finish, destroy the original body
-    world->DestroyBody(slicedBody);
+        
+        // Destroy the original body
+        world->DestroyBody(slicedBody);
+    }
 }
 
 #pragma mark -
@@ -400,19 +435,18 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSSet *allTouches = [event allTouches];
+    NSSet *allTouches   = [event allTouches];
     
 	for(UITouch *touch in allTouches)
     {
-		CGPoint location = [touch locationInView:touch.view];
+		CGPoint location    = [touch locationInView:touch.view];
+		location            = [[CCDirector sharedDirector] convertToGL:location];
         
-		location = [[CCDirector sharedDirector] convertToGL:location];
-        
-        laser.endPoint = location;
+        laser.endPoint      = location;
     }
     
-    CGPoint startPoint = laser.startPoint;
-    CGPoint endPoint = laser.endPoint;
+    CGPoint startPoint  = laser.startPoint;
+    CGPoint endPoint    = laser.endPoint;
     
     if (!CGPointEqualToPoint(startPoint, endPoint))
     {
@@ -424,8 +458,8 @@ int sanityCheck(b2Vec2 *vec, int vecCount)
     }
     
     // Remove the laser on the screen
-    laser.startPoint = CGPointZero;
-    laser.endPoint = CGPointZero;
+    laser.startPoint    = CGPointZero;
+    laser.endPoint      = CGPointZero;
 }
 
 @end
